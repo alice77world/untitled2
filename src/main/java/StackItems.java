@@ -2,44 +2,82 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Stack;
 
-public class StackItems extends Item{ //стопка
-    Stack<Item> items1 = new Stack<Item>();
-    int limitQuantity = 15;
+/** Стопка - предмет-контейнер наследуется от Предмета и интерфейса IContainer,
+ * содержит поле предельное количество
+ */
+public class StackItems extends Item implements IContainer{ //стопка
+    Stack<Item> items = new Stack<Item>();
+    int limitQuantity;
 
+    /**Конструктор создания объекта стопка
+     * с указанием предельного количества элементов в стопке
+     */
     StackItems(String name, double weight, String color,int limitQuantity) {
-        super(name, weight, color, true);
+        super("Стопка", weight, color, true);
         this.limitQuantity = limitQuantity;
     }
-    void addItem(Item item1){
-        if((item1.isFlat()==true)&&(this.allQuantity()<limitQuantity)) {
-            this.items1.push(item1);
-        }
+
+    /**Добавление предмета в стопку всегда наверх
+     *при превышении количества допустимых предметов, получаем исключение
+     */
+    @Override
+    public void addItem(Item item) throws ItemStoreException,ItemAlreadyPlacedException,PutTheContainerInsideItselfException {
+        if (this.items.size()>=limitQuantity) throw new ItemStoreException(item);
+        if (item.isDoesTheItemLieInContainer()) throw new ItemAlreadyPlacedException(item);
+            if(item.isFlat()) {this.items.push(item);}
+            item.setDoesTheItemLieInContainer(true);
+            this.setWeight(this.getWeight()+item.getWeight());
+
     }
-    void getInfo() {
-        System.out.println("Name: "+this.getName());
-        System.out.println("Weight: "+this.getWeight());
-        System.out.println("Color: "+this.getColor());
-        System.out.println("Limit quantity: "+this.limitQuantity);
-        System.out.println("Content: "+this.showContentItems());
-    }
-    void pullOutItem(){
-        this.items1.pop();
-    }
-    int allQuantity(){
-        int allquantity = this.items1.size();
-        return allquantity;
-    }
-    void searchIem(Item item1){
-        boolean result = this.items1.contains(item1);
-        if (result==true){
-            System.out.println("Элемент "+ this.getName()+"содержит "+item1.getName());
-        }
-    }
-    String showContentItems(){
+
+    /**Метод возвращает строку с информацией о стопке
+     */
+    public String getInfo() {
         String result = " ";
-        Iterator<Item> listIter = items1.iterator();
-        while(listIter.hasNext()){
-            result= result + listIter.next().getName()+" ";
+        result += "name: "+this.getName()+"; ";
+        result += "weight: "+this.getWeight()+"; ";
+        result += "color: "+this.getColor()+"; ";
+        result += "Limit quantity: "+this.limitQuantity+"; ";
+        result += "Content: "+this.showContentItems()+";";
+        return result;
+    }
+
+    /**Когда забираем предмет из стопки, то забираем всегда сверху.
+     */
+    @Override
+    public void pullOutItem() {
+        this.items.pop();
+    }
+
+    /**Метод возвращает количество предметов внутри предмета-контейнера
+     */
+       public int allQuantity(){
+           return this.items.size();
+    }
+
+    /** Метод для поиска предмета внутри стопку по имени
+     * возвращает логический тип данных (true,false)
+     */
+    @Override
+    public boolean searchItem(String name){
+        boolean result = false;
+        Iterator<Item> listIter = items.listIterator();
+        while(listIter.hasNext()) {
+            if ((listIter.next().getName()) == name) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /**метод возвращает строку с названиями предметов внутри предмета-контейнера
+     */
+    @Override
+    public String showContentItems(){
+        String result = " ";
+        Iterator<Item> iter = items.iterator();
+        while(iter.hasNext()){
+            result= result + iter.next().getName()+" ";
         }
         return result;
     }
