@@ -1,0 +1,9 @@
+Box.class
+Run.class
+IContainer.class
+StackItems.class
+Item.class
+PutTheContainerInsideItselfException.class
+ItemAlreadyPlacedException.class
+Bag.class
+ItemStoreException.class

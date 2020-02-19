@@ -1,3 +1,5 @@
+import io.qameta.allure.Step;
+
 import java.util.*;
 /** Класс Мешок - это предмет-контейнер, он тоже является предметом,
  * но фактически содержит несколько предметов внутри.
@@ -26,6 +28,7 @@ public class Bag extends Item implements IContainer {
      * и устанавливаем значение переменной "лежит ли предмет в контейнере" на истину.
      */
     @Override
+    @Step
     public void addItem(Item item) throws ItemStoreException, ItemAlreadyPlacedException,PutTheContainerInsideItselfException {
         if ((item.getWeight()+this.getWeight())>=this.limitWeight) throw new ItemStoreException(item);
         else if (item.isDoesTheItemLieInContainer()) throw new ItemAlreadyPlacedException(item);
@@ -40,6 +43,7 @@ public class Bag extends Item implements IContainer {
      * Узнаем количество элементов в мешке и удаляем случайный предмет.
      */
     @Override
+    @Step
     public void pullOutItem() {
         int a = this.items.size();
         if (a >= 1) {
@@ -54,6 +58,7 @@ public class Bag extends Item implements IContainer {
      * Переопределем метод интерфейса IContainer
     */
     @Override
+    @Step
     public boolean searchItem(String name) {
         boolean result = false;
         ListIterator<Item> listIter = items.listIterator();
@@ -68,6 +73,7 @@ public class Bag extends Item implements IContainer {
     /**
      * Данный метод возвращает строку с информацией о предмете
      */
+    @Step
     public String getInfo() {
         String result = "";
         result += "name: "+this.getName()+"; ";
@@ -83,6 +89,7 @@ public class Bag extends Item implements IContainer {
      * Данный метод возвращает строку с названиями предметов, хранящихся в мешке
      */
     @Override
+    @Step
     public String showContentItems() {
         String result = " ";
         ListIterator<Item> listIter = items.listIterator();

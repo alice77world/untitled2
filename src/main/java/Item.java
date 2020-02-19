@@ -1,3 +1,5 @@
+import io.qameta.allure.Step;
+
 /**
  * Item - основной класс (предмет)
  * имеет поля:
@@ -32,6 +34,7 @@ public class Item { //предмет
     /**
      * метод getInfo() возвращает информацию о предмете в виде строки
      */
+    @Step
     public String getInfo(){
         String result = "";
         result += "name: "+this.name+"; ";
@@ -40,15 +43,25 @@ public class Item { //предмет
         result += "flat: "+this.flat+"; ";
         return result;
     }
+    @Step
     public String getName() { return name; }
+    @Step
     public void setName(String name) { this.name = name; }
+    @Step
     public double getWeight() { return weight; }
+    @Step
     public void setWeight(double weight) { this.weight = weight; }
+    @Step
     public String getColor() { return color; }
+    @Step
     public void setColor(String color) { this.color = color; }
+    @Step
     public boolean isFlat() { return flat; }
+    @Step
     public void setFlat(boolean flat) { this.flat = flat; }
+    @Step
     public boolean isDoesTheItemLieInContainer() { return doesTheItemLieInContainer; }
+    @Step
     public void setDoesTheItemLieInContainer(boolean doesTheItemLieInContainer) { this.doesTheItemLieInContainer = doesTheItemLieInContainer; }
 
     /**
@@ -56,6 +69,7 @@ public class Item { //предмет
      * @return данный метод возвращает имя предмета
      */
     @Override
+    @Step
     public String toString() {
         return  getName();
     }

@@ -1,3 +1,5 @@
+import io.qameta.allure.Step;
+
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Stack;
@@ -20,6 +22,7 @@ public class StackItems extends Item implements IContainer{ //стопка
     /**Добавление предмета в стопку всегда наверх
      *при превышении количества допустимых предметов, получаем исключение
      */
+    @Step
     @Override
     public void addItem(Item item) throws ItemStoreException,ItemAlreadyPlacedException,PutTheContainerInsideItselfException {
         if (this.items.size()>=limitQuantity) throw new ItemStoreException(item);
@@ -32,6 +35,7 @@ public class StackItems extends Item implements IContainer{ //стопка
 
     /**Метод возвращает строку с информацией о стопке
      */
+    @Step
     public String getInfo() {
         String result = " ";
         result += "name: "+this.getName()+"; ";
@@ -45,13 +49,15 @@ public class StackItems extends Item implements IContainer{ //стопка
     /**Когда забираем предмет из стопки, то забираем всегда сверху.
      */
     @Override
+    @Step
     public void pullOutItem() {
         this.items.pop();
     }
 
     /**Метод возвращает количество предметов внутри предмета-контейнера
      */
-       public int allQuantity(){
+    @Step
+    public int allQuantity(){
            return this.items.size();
     }
 
@@ -59,6 +65,7 @@ public class StackItems extends Item implements IContainer{ //стопка
      * возвращает логический тип данных (true,false)
      */
     @Override
+    @Step
     public boolean searchItem(String name){
         boolean result = false;
         Iterator<Item> listIter = items.listIterator();
@@ -73,6 +80,7 @@ public class StackItems extends Item implements IContainer{ //стопка
     /**метод возвращает строку с названиями предметов внутри предмета-контейнера
      */
     @Override
+    @Step
     public String showContentItems(){
         String result = " ";
         Iterator<Item> iter = items.iterator();

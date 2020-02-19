@@ -1,9 +1,8 @@
 import org.junit.Test;
-
+import io.qameta.allure.Step;
 import static org.junit.Assert.*;
 
 public class StackItemsTest {
-
     @Test
     public void addItem() {
         Item book1 = new Item("Справочник1",0.3,"White",true);
